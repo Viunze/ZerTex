@@ -251,18 +251,18 @@ ServerTab:CreateButton({
 })
 
 -- Credits Tab
-local creditsTab = Window:MakeTab({
-    Name = "Credits",
-    Icon = "💬",
-    PremiumOnly = false
-})
+local CreditTab = Window:CreateTab("📜 Credits", 4483362458)
 
-creditsTab:AddLabel("Created by Viunze")
+CreditTab:CreateLabel("Created by Viunze")
 
-creditsTab:AddButton({
-    Name = "Join Discord XploitForce",
+CreditTab:CreateButton({
+    Name = "📎 Join Discord XploitForce",
     Callback = function()
         setclipboard("https://discord.gg/QjsgcpFDDr")
-        notify("ZerTex | TSB", "Link has been copied to clipboard!", 5)
+        Rayfield:Notify({
+            Title = "Link Copied!",
+            Content = "Discord link has been copied to clipboard!",
+            Duration = 5
+        })
     end
 })
