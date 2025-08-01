@@ -56,6 +56,23 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
+-- ⬇️ Logic Auto Slot 1–4 Acak
+local vim = game:GetService("VirtualInputManager")
+local keys = {Enum.KeyCode.One, Enum.KeyCode.Two, Enum.KeyCode.Three, Enum.KeyCode.Four}
+_G.AutoSlot = false
+
+function AutoSlotLoop()
+	task.spawn(function()
+		while _G.AutoSlot do
+			local key = keys[math.random(1, #keys)]
+			vim:SendKeyEvent(true, key, false, game)
+			task.wait(0.05) -- spam secepat mungkin
+			vim:SendKeyEvent(false, key, false, game)
+			task.wait(0.05) -- jeda dikit biar ga crash
+		end
+	end)
+end
+
 -- UI Build
 local Window = Rayfield:CreateWindow({
     Name = "ZerTex | TSB",
@@ -105,6 +122,31 @@ MainTab:CreateToggle({
     Callback = function(state)
         camlock = state
     end
+})
+
+MainTab:CreateToggle({
+	Name = "🔁 Auto Skill",
+	CurrentValue = false,
+	Flag = "AutoSlotRandom",
+	Callback = function(Value)
+		_G.AutoSlot = Value
+		if Value then
+			AutoSlotLoop()
+		end
+	end
+})
+
+MainTab:CreateButton({
+	Name = "🛑 Stop Kill",
+	Callback = function()
+		target = nil
+		autofarm = false
+		Rayfield:Notify({
+			Title = "Kill Stopped",
+			Content = "Target cleared and auto kill disabled.",
+			Duration = 4
+		})
+	end
 })
 
 -- Tools Tab
@@ -267,7 +309,7 @@ CreditTab:CreateButton({
     end
 })
 
-CreditsTab:CreateButton({
+CreditTab:CreateButton({
     Name = "📱 Join WhatsApp Group (Tap to Copy)",
     Callback = function()
         setclipboard("https://chat.whatsapp.com/CTzzMGBGnkJ3jgdfSF0y4d?mode=ac_t")
