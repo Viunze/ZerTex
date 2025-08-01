@@ -266,3 +266,16 @@ CreditTab:CreateButton({
         })
     end
 })
+
+CreditsTab:CreateButton({
+    Name = "📱 Join WhatsApp Group (Tap to Copy)",
+    Callback = function()
+        setclipboard("https://chat.whatsapp.com/CTzzMGBGnkJ3jgdfSF0y4d?mode=ac_t")
+        Rayfield:Notify({
+            Title = "Link Copied!",
+            Content = "WhatsApp group link copied to clipboard.",
+            Duration = 5
+        })
+    end
+})
+
